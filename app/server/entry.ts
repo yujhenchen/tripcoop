@@ -1,5 +1,4 @@
 import { authjsHandler, authjsSessionMiddleware } from "./authjs-handler";
-import { createTodoHandler } from "./create-todo-handler";
 import { apply, serve } from "@photonjs/hono";
 import { Hono } from "hono";
 
@@ -17,7 +16,6 @@ function startApp() {
     // Auth.js route. See https://authjs.dev/getting-started/installation
     authjsHandler,
 
-    createTodoHandler,
   ]);
 
   return serve(app, {

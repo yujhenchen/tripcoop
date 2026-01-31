@@ -7,10 +7,10 @@ import vikeReact from "vike-react/config";
 
 export default {
   // https://vike.dev/head-tags
-  title: "My Vike App",
-  description: "Demo showcasing Vike",
+  title: "Trip Co-op",
+  description: "Plan your next adventure together",
 
-  passToClient: ["user"],
+  passToClient: ["user", "routePath", "bgImgUrl"],
   extends: [vikeReact, vikePhoton],
 
   // https://vike.dev/vike-photon

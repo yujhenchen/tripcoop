@@ -1,0 +1,63 @@
+import { initBgImages } from "./utils/assetsHelper";
+
+// Import the server-side function to fetch image IDs
+// (You may need to adjust the import path depending on your build setup)
+import { getAssetsPublicIds } from "./server/cloudinaryAssets";
+
+export class BgImgStore {
+  private static instance: BgImgStore;
+  private imgIds: Array<string> = [];
+  private imgUrlMap: Map<string, { default: string; small: string }> =
+    new Map();
+
+  private currentImgId = "";
+
+  private constructor() { }
+
+  public static async getInstance(
+    cloudName: string,
+    imgPrefix: string,
+  ): Promise<BgImgStore> {
+    if (!BgImgStore.instance) {
+      BgImgStore.instance = new BgImgStore();
+    }
+    if (BgImgStore.instance.imgIds.length === 0) {
+      // Fetch image IDs on the server using the prefix
+      const imgIds = await getAssetsPublicIds({ prefix: imgPrefix });
+      await initBgImages(cloudName, imgIds, BgImgStore.instance);
+    }
+    return BgImgStore.instance;
+  }
+
+  public setImgIds(imgIds: Array<string>): void {
+    this.imgIds = imgIds;
+  }
+
+  public getImgIds(): Array<string> {
+    return this.imgIds;
+  }
+
+  public setImgUrlMap(
+    imgUrlMap: Map<string, { default: string; small: string }>,
+  ): void {
+    this.imgUrlMap = imgUrlMap;
+  }
+
+  public getImgUrlMap(): Map<string, { default: string; small: string }> {
+    return this.imgUrlMap;
+  }
+
+  public getItemFromImgUrlMap(
+    imgId: string,
+  ): { default: string; small: string } | undefined {
+    return this.imgUrlMap.get(imgId);
+  }
+
+  public setCurrentImgId(imgId: string): void {
+    this.currentImgId = imgId;
+  }
+
+  public getCurrentImgId(): string {
+    return this.currentImgId;
+  }
+}

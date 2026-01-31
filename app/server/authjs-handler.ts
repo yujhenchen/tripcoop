@@ -11,7 +11,7 @@ const authjsConfig = {
   basePath: "/api/auth",
   trustHost: true,
   // TODO: Replace secret {@see https://authjs.dev/reference/core#secret}
-  secret: "MY_SECRET",
+  secret: env.AUTH_SECRET,
   providers: [
     // TODO: Choose and implement providers
     CredentialsProvider({
@@ -45,7 +45,7 @@ const authjsConfig = {
 export async function getSession(req: Request, config: Omit<AuthConfig, "raw">): Promise<Session | null> {
   setEnvDefaults(process.env, config);
   const requestURL = new URL(req.url);
-  const url = createActionURL("session", requestURL.protocol, req.headers, process.env, config);
+  const url = createActionURL("session", requestURL.protocol, req.headers, process.env, config.basePath);
 
   const response = await Auth(new Request(url, { headers: { cookie: req.headers.get("cookie") ?? "" } }), config);
 
