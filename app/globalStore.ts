@@ -1,8 +1,4 @@
-import { initBgImages } from "./utils/assetsHelper";
-
-// Import the server-side function to fetch image IDs
-// (You may need to adjust the import path depending on your build setup)
-import { getAssetsPublicIds } from "./server/cloudinaryAssets";
+import { initBgImages } from "@/server/assetsHelper";
 
 export class BgImgStore {
   private static instance: BgImgStore;
@@ -22,9 +18,7 @@ export class BgImgStore {
       BgImgStore.instance = new BgImgStore();
     }
     if (BgImgStore.instance.imgIds.length === 0) {
-      // Fetch image IDs on the server using the prefix
-      const imgIds = await getAssetsPublicIds({ prefix: imgPrefix });
-      await initBgImages(cloudName, imgIds, BgImgStore.instance);
+      await initBgImages(cloudName, imgPrefix, BgImgStore.instance);
     }
     return BgImgStore.instance;
   }
