@@ -1,9 +1,15 @@
 pre-commit:
     parallel: true
     commands:
-        lint:
-            root: "web"
-            run: bun run lint
         format:
             root: "web"
             run: bun run format
+        lint:
+            root: "web"
+            run: bun run lint
+
+pre-push:
+    commands:
+        check:
+            root: "web"
+            run: bun run check
