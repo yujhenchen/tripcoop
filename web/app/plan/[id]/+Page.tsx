@@ -1,21 +1,16 @@
-// import { SidebarProvider } from "@/components/providers/SidebarProvider";
+import { SidebarProvider } from "@/components/providers/SidebarProvider";
 import { Content } from "./content";
-// import { PlanSidebar } from "./planSidebar";
+import { PlanSidebar } from "./planSidebar";
 import { DndSortableProvider } from "@/components/providers/DndSortableProvider";
-export default async function PlanPage({
-	params,
-}: {
-	params: Promise<{ id: string }>;
-}) {
-	const { id } = await params;
 
+export default function PlanPage() {
 	return (
 		<DndSortableProvider>
 			<div className="flex flex-col md:flex-row-reverse h-[calc(100vh-6rem)]">
 				<Content />
-				{/* <SidebarProvider>
+				<SidebarProvider>
 					<PlanSidebar />
-				</SidebarProvider> */}
+				</SidebarProvider>
 			</div>
 		</DndSortableProvider>
 	);
